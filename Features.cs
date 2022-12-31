@@ -3,40 +3,46 @@
     [TestClass]
     public class Features
     {
-        StepDefinitions step = new StepDefinitions();
+        Usuarios usuarios = new Usuarios();
 
         #region ServRestAPI
 
         #region CADASTRO
         [TestMethod]
-        public void CT01ValidarVadastroUsuarioComSucesso() => step.realizarNovoCadastroComSucesso();
+        public void CT01ValidarCadastroUsuarioComSucesso() => usuarios.realizarNovoCadastroComSucesso();
         
         [TestMethod]
-        public void CT02ValidarCadastroUsuarioJaExistente() => step.realizarCadastroComDadosJaExistentes();
+        public void CT02ValidarCadastroUsuarioJaExistente() => usuarios.realizarCadastroComDadosJaExistentes();
         #endregion CADASTRO
 
         #region CONSULTA
         [TestMethod]
-        public void CT03ValidarListarUsuariosCadastrados() => step.realizarConsultaListaDeUsuariosCadastrados();
+        public void CT03ValidarListarUsuariosCadastrados() => usuarios.realizarConsultaListaDeUsuariosCadastrados();
 
         [TestMethod]
-        public void CT04ValidarConsultaPorId() => step.realizarConsultaUsuarioId();
+        public void CT04ValidarConsultaPorId() => usuarios.realizarConsultaUsuarioId();
+
+        [TestMethod]
+        public void CT05ValidarConsultaIdInexistente() => usuarios.realizarConsultaUsuarioIdInexistente();
 
         #endregion CONSULTA
 
         #region Edição
 
         [TestMethod]
-        public void CT05ValidarEdicaoPorId() => step.realizarEdicaoUsuarioId();
+        public void CT06ValidarEdicaoPorId() => usuarios.realizarEdicaoUsuarioId();
 
         [TestMethod]
-        public void CT06ValidarEdicaoPorIdComMesmoEmail() => step.realizarEdicaoUsuarioIdComMesmoEmail();
+        public void CT07ValidarEdicaoPorIdComMesmoEmail() => usuarios.realizarEdicaoUsuarioIdComMesmoEmail();
 
         #endregion Edição
 
         #region Exclusão
         [TestMethod]
-        public void CT07ValidarExclusaoPorId() => step.realizarExclusaoPorId();
+        public void CT08ValidarExclusaoPorId() => usuarios.realizarExclusaoPorId();
+
+        [TestMethod]
+        public void CT09ValidarTentativaExclusaoComIdInexistente() => usuarios.tentarRealizarExclusaoComIdInexistente();
 
         #endregion Exclusão
 

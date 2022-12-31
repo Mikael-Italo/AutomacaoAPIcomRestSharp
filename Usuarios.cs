@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace AutomacaoAPIcomRestSharp
+﻿namespace AutomacaoAPIcomRestSharp
 {
-    public class StepDefinitions : Hooks
+    public class Usuarios : Hooks
     {
         private static RestClient? restClient;
-        public StepDefinitions() => restClient = new RestClient("https://serverest.dev/#/");
+        public Usuarios() => restClient = new RestClient("https://serverest.dev/#/");
 
         public static RestResponse? response { get; set; }
         public static string? idUser { get; set; }
@@ -42,7 +40,9 @@ namespace AutomacaoAPIcomRestSharp
             //var options = new JsonSerializerOptions { WriteIndented = true };
             //Salva o ID na variavel idUser
             idUser = (string)JsonNode!["_id"]!;
-            Console.WriteLine(idUser);
+
+            Console.WriteLine("id: " + idUser);
+            Console.WriteLine("Code: " + code + " Response " + response.Content);
 
             //Validações
             Assert.AreEqual(201, code);
@@ -63,6 +63,9 @@ namespace AutomacaoAPIcomRestSharp
 
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
+
+            Console.WriteLine("id: " + idUser);
+            Console.WriteLine("Code: " + code + " Response " + response.Content);
 
             //Validações
             Assert.AreEqual(400, code);
@@ -90,7 +93,7 @@ namespace AutomacaoAPIcomRestSharp
             //Validações
             Assert.AreEqual(200, code);
             Assert.IsTrue(response.Content!.Contains(idUser!), "Verifica se o contém o Id no response");
-            Assert.IsTrue(response.Content!.Contains(emailL), "Verifica se o contém o Email no response");
+            Assert.IsTrue(response.Content!.Contains(emailL!), "Verifica se o contém o Email no response");
         }
 
         public void realizarConsultaUsuarioId()
@@ -98,8 +101,7 @@ namespace AutomacaoAPIcomRestSharp
             string id = idUser!.ToString();
 
             RestRequest request = new RestRequest("/usuarios/"+id, Method.Get);
-            Thread.Sleep(1000);
-
+     
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
@@ -111,6 +113,23 @@ namespace AutomacaoAPIcomRestSharp
             Assert.IsTrue(response.Content!.Contains(id), "Verifica se o contém o Id no response");
             Assert.IsTrue(response.Content!.Contains(emailL!), "Verifica se o contém o email no response");
         }
+
+        public void realizarConsultaUsuarioIdInexistente()
+        {
+            string id = "SD3ysskAoSL";
+
+            RestRequest request = new RestRequest("/usuarios/" + id, Method.Get);
+
+            response = restClient!.Execute(request);
+            var code = (int)response.StatusCode;
+
+            Console.WriteLine("id: " + idUser);
+            Console.WriteLine("Code: " + code + " Response " + response.Content);
+
+            //Validações
+            Assert.AreEqual(400, code);
+            Assert.IsTrue(response.Content!.Contains("Usuário não encontrado"));
+        }
         #endregion Consultas
 
         #region Editar
@@ -118,11 +137,13 @@ namespace AutomacaoAPIcomRestSharp
         public void realizarEdicaoUsuarioId()
         {
             string id = idUser!.ToString();
+            Random random = new Random();
+            string rdn = random.Next(100, 200).ToString();
 
             RestRequest request = new RestRequest("/usuarios/"+id, Method.Put);
             request.AddJsonBody(new {
                 nome = "Teste editado",
-                email = "teste.edicao1@qa.com",
+                email = "teste.edicao"+rdn+"@qa.com",
                 password = "123teste",
                 administrador = "true"
             });
@@ -145,7 +166,7 @@ namespace AutomacaoAPIcomRestSharp
             request.AddJsonBody(new
             {
                 nome = "Teste editado",
-                email = "teste.edicao1@qa.com",
+                email = "beltrano@qa.com.br",
                 password = "123teste",
                 administrador = "true"
             });
@@ -156,8 +177,8 @@ namespace AutomacaoAPIcomRestSharp
             Console.WriteLine("id: " + id);
             Console.WriteLine("Code: " + code + " Response " + response.Content);
 
-            //Assert.AreEqual(200, code);
-            //Assert.IsTrue(response.Content!.Contains("Registro alterado com sucesso"));
+            Assert.AreEqual(400, code);
+            Assert.IsTrue(response.Content!.Contains("Este email já está sendo usado"));
         }
 
         #endregion Editar
@@ -168,20 +189,34 @@ namespace AutomacaoAPIcomRestSharp
         {
             string id = idUser!.ToString();
 
-            RestRequest request = new RestRequest("/usuarios/" + id, Method.Put);
-            request.AddJsonBody(new
-            {
-                nome = "Teste editado",
-                email = "teste.edicao1@qa.com",
-                password = "123teste",
-                administrador = "true"
-            });
+            RestRequest request = new RestRequest("/usuarios/" + id, Method.Delete);
 
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
+            Console.WriteLine("id: " + id);
+            Console.WriteLine("Code: " + code + " Response " + response.Content);
+
+            Assert.AreEqual (200, code);
+            Assert.IsTrue(response.Content!.Contains("Registro excluído com sucesso"));
+
         }
 
+        public void tentarRealizarExclusaoComIdInexistente()
+        {
+            string id = idUser!.ToString();
+
+            RestRequest request = new RestRequest("/usuarios/" + id, Method.Delete);
+
+            response = restClient!.Execute(request);
+            var code = (int)response.StatusCode;
+
+            Console.WriteLine("id: " + id);
+            Console.WriteLine("Code: " + code + " Response " + response.Content);
+
+            Assert.AreEqual(200, code);
+            Assert.IsTrue(response.Content!.Contains("Nenhum registro excluído"));
+        }
         #endregion Exclusão
     }
 }
