@@ -71,6 +71,38 @@
             Assert.AreEqual(400, code);
             Assert.IsTrue(response.Content!.Contains("Este email já está sendo usado"), "Verifica se contém mensagem 'Este email já está sendo usado' ");
         }
+        #region Cadastro Simples
+
+        public string cadastroAdm()
+        {
+            Random random = new Random();
+            string rdn = random.Next(1, 100).ToString();
+
+            string email = "teste.qa" + rdn + "@qa.com";
+            string idS, retorno;
+
+            RestRequest request = new RestRequest("/usuarios", Method.Post);
+            request.AddJsonBody(new
+            {
+                nome = "Testando",
+                email = email,
+                password = "teste",
+                administrador = "true"
+            });
+
+            response = restClient!.Execute(request);
+            JsonNode JsonNode = JsonNode.Parse(response.Content!)!;
+            idS = (string)JsonNode!["_id"]!;
+            
+            retorno = "{\r\n  \"email\": \""+email+"\"," +
+                "\r\n  \"senha\": \"teste\"," +
+                "\r\n  \"idUsuario\": \""+idS+"\"" + "" +
+                "\n}";
+
+            return retorno;
+        }
+        #endregion Cadastro Simples
+
         #endregion Cadastro
 
         #region Consultas

@@ -4,8 +4,9 @@
     public class Features
     {
         Usuarios usuarios = new Usuarios();
+        Login login = new Login();
 
-        #region ServRestAPI
+        #region Usuários
 
         #region CADASTRO
         [TestMethod]
@@ -46,14 +47,16 @@
 
         #endregion Exclusão
 
+        #endregion Usuários
+
         #region Login
-        public void loginUsuario()
-        {
 
-        }
+        [TestMethod]
+        public void CT10ValidarloginUsuario() => login.realizarLoginComSucesso();
+
+        [TestMethod]
+        public void CT11ValidarloginUsuarioInvalido() => login.realizarLoginSemSucesso();
+
         #endregion Login
-
-        #endregion ServRest
-
     }
 }
