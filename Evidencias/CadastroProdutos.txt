@@ -1,0 +1,19 @@
+
+================================================
+Data e hora do teste: 02/01/2023 17:54:36
+
+---------BDD-----------------
+Dado que o usuario esteja autenticado
+E que realize a chamada ao endpoint POST /produtos
+E que preencha com dados validos o request JSON
+Quando executar o endpoint
+Entao o endpoint retorna o code 201 - OK
+E exibe a mensagem: Cadastro realizado com sucesso
+-----------------------------
+response.StatusCode: Created
+response.StatusCode: 201
+response.content: {
+    "message": "Cadastro realizado com sucesso",
+    "_id": "VtYp6Na5sYFvp9Lw"
+}
+================================================
