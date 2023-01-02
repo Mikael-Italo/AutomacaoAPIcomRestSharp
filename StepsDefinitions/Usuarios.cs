@@ -1,4 +1,4 @@
-﻿namespace AutomacaoAPIcomRestSharp
+﻿namespace AutomacaoAPIcomRestSharp.StepsDefinitions
 {
     public class Usuarios : Hooks
     {
@@ -20,8 +20,8 @@
         public void realizarNovoCadastroComSucesso()
         {
             Random random = new Random();
-            string rdn = random.Next(1, 100).ToString();  
-            emailL = "teste.stronks"+rdn+"@qa.com";
+            string rdn = random.Next(1, 100).ToString();
+            emailL = "teste.stronks" + rdn + "@qa.com";
 
             RestRequest request = new RestRequest("/usuarios", Method.Post);
             request.AddJsonBody(new
@@ -85,7 +85,7 @@
             request.AddJsonBody(new
             {
                 nome = "Testando",
-                email = email,
+                email,
                 password = "teste",
                 administrador = "true"
             });
@@ -93,10 +93,10 @@
             response = restClient!.Execute(request);
             JsonNode JsonNode = JsonNode.Parse(response.Content!)!;
             idS = (string)JsonNode!["_id"]!;
-            
-            retorno = "{\r\n  \"email\": \""+email+"\"," +
+
+            retorno = "{\r\n  \"email\": \"" + email + "\"," +
                 "\r\n  \"senha\": \"teste\"," +
-                "\r\n  \"idUsuario\": \""+idS+"\"" + "" +
+                "\r\n  \"idUsuario\": \"" + idS + "\"" + "" +
                 "\n}";
 
             return retorno;
@@ -119,7 +119,7 @@
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
-            Console.WriteLine("id: "+idUser);
+            Console.WriteLine("id: " + idUser);
             Console.WriteLine("Code: " + code + " Response " + response.Content);
 
             //Validações
@@ -132,8 +132,8 @@
         {
             string id = idUser!.ToString();
 
-            RestRequest request = new RestRequest("/usuarios/"+id, Method.Get);
-     
+            RestRequest request = new RestRequest("/usuarios/" + id, Method.Get);
+
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
@@ -172,10 +172,11 @@
             Random random = new Random();
             string rdn = random.Next(100, 200).ToString();
 
-            RestRequest request = new RestRequest("/usuarios/"+id, Method.Put);
-            request.AddJsonBody(new {
+            RestRequest request = new RestRequest("/usuarios/" + id, Method.Put);
+            request.AddJsonBody(new
+            {
                 nome = "Teste editado",
-                email = "teste.edicao"+rdn+"@qa.com",
+                email = "teste.edicao" + rdn + "@qa.com",
                 password = "123teste",
                 administrador = "true"
             });
@@ -185,7 +186,7 @@
 
             Console.WriteLine("id: " + id);
             Console.WriteLine("Code: " + code + " Response " + response.Content);
-            
+
             Assert.AreEqual(200, code);
             Assert.IsTrue(response.Content!.Contains("Registro alterado com sucesso"));
         }
@@ -229,7 +230,7 @@
             Console.WriteLine("id: " + id);
             Console.WriteLine("Code: " + code + " Response " + response.Content);
 
-            Assert.AreEqual (200, code);
+            Assert.AreEqual(200, code);
             Assert.IsTrue(response.Content!.Contains("Registro excluído com sucesso"));
 
         }

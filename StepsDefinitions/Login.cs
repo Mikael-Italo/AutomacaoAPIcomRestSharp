@@ -1,6 +1,4 @@
-﻿using RestSharp;
-
-namespace AutomacaoAPIcomRestSharp
+﻿namespace AutomacaoAPIcomRestSharp.StepsDefinitions
 {
     public class Login
     {
@@ -20,7 +18,7 @@ namespace AutomacaoAPIcomRestSharp
             RestRequest request = new RestRequest("/login", Method.Post);
             request.AddJsonBody(new
             {
-                email = email,
+                email,
                 password = senha
             });
 

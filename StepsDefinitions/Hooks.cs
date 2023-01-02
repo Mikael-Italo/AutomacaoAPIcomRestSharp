@@ -1,4 +1,4 @@
-﻿namespace AutomacaoAPIcomRestSharp
+﻿namespace AutomacaoAPIcomRestSharp.StepsDefinitions
 {
     public class Hooks
     {
@@ -10,13 +10,15 @@
         }
 
         [TestInitialize]
-        public void getUp(){
+        public void getUp()
+        {
             Console.WriteLine("Inicio de teste");
             initialize();
         }
 
         [TestCleanup]
-        public void tearDown() {
+        public void tearDown()
+        {
             Console.WriteLine("Fim de teste");
         }
     }

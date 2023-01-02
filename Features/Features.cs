@@ -1,17 +1,18 @@
-﻿namespace AutomacaoAPIcomRestSharp
+﻿namespace AutomacaoAPIcomRestSharp.Features
 {
     [TestClass]
     public class Features
     {
         Usuarios usuarios = new Usuarios();
         Login login = new Login();
+        Produtos produtos = new Produtos();
 
         #region Usuários
 
         #region CADASTRO
         [TestMethod]
         public void CT01ValidarCadastroUsuarioComSucesso() => usuarios.realizarNovoCadastroComSucesso();
-        
+
         [TestMethod]
         public void CT02ValidarCadastroUsuarioJaExistente() => usuarios.realizarCadastroComDadosJaExistentes();
         #endregion CADASTRO
@@ -58,5 +59,13 @@
         public void CT11ValidarloginUsuarioInvalido() => login.realizarLoginSemSucesso();
 
         #endregion Login
+
+        #region Produtos
+
+        [TestMethod]
+        public void CT12ValidarCadastroProdutos() => produtos.cadastroDeProdutosComSucesso();
+       
+        #endregion Produtos
+
     }
 }
