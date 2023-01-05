@@ -1,0 +1,36 @@
+
+================================================
+Data e hora do teste: 04/01/2023 12:30:35
+
+---------BDD-----------------
+Dado que haja um produto cadastrado
+E que realize a chamada ao endpoint DELETE /produtos
+E que preencha com dados validos o campo @_id
+Quando executar o endpoint
+Entao o endpoint retorna o code 200 - OK
+E a mensagem: 'Registro exclu?do com sucesso'
+-----------------------------
+response.StatusCode: OK
+response.StatusCode: 200
+response.content: {
+    "message": "Registro exclu?do com sucesso"
+}
+================================================
+
+================================================
+Data e hora do teste: 04/01/2023 16:23:27
+
+---------BDD-----------------
+Dado que haja um usuario/ADM logado e que haja um produto cadastrado
+E que realize a chamada ao endpoint DELETE /produtos
+E que preencha com dados validos o campo @_id
+Quando executar o endpoint
+Entao o endpoint retorna o code 200 - OK
+E a mensagem: 'Registro exclu?do com sucesso'
+-----------------------------
+response.StatusCode: OK
+response.StatusCode: 200
+response.content: {
+    "message": "Registro exclu?do com sucesso"
+}
+================================================

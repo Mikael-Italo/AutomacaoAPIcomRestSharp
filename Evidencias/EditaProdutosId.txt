@@ -1,0 +1,106 @@
+
+================================================
+Data e hora do teste: 04/01/2023 13:35:26
+
+---------BDD-----------------
+Dado que haja um usuario/ADM logado e que haja um produto cadastradoE que realize a chamada ao endpoint PUT /produtos
+E que preencha com dados validos o campo @_id
+E que preencha com dados validos o body/JSON Quando executar o endpoint
+Entao o endpoint retorna o code 200 - OK
+E a mensagem: 'Registro alterado com sucesso'
+-----------------------------
+response.StatusCode: OK
+response.StatusCode: 200
+response.content: {
+    "message": "Registro alterado com sucesso"
+}
+================================================
+
+================================================
+Data e hora do teste: 04/01/2023 16:23:29
+
+---------BDD-----------------
+Dado que haja um usuario/ADM logado e que haja um produto cadastrado
+E que realize a chamada ao endpoint PUT /produtos
+E que preencha com dados validos o campo @_id
+E que preencha com dados validos o body/JSON Quando executar o endpoint
+Entao o endpoint retorna o code 200 - OK
+E a mensagem: 'Registro alterado com sucesso'
+-----------------------------
+response.StatusCode: OK
+response.StatusCode: 200
+response.content: {
+    "message": "Registro alterado com sucesso"
+}
+================================================
+
+================================================
+Data e hora do teste: 04/01/2023 16:47:00
+
+---------BDD-----------------
+Dado que haja um usuario/ADM logado e que haja um produto cadastrado
+E que realize a chamada ao endpoint PUT /produtos
+E que preencha com dados validos o campo @_id
+E que preencha com dados validos o body/JSON Quando executar o endpoint
+Entao o endpoint retorna o code 200 - OK
+E a mensagem: 'Registro alterado com sucesso'
+-----------------------------
+response.StatusCode: OK
+response.StatusCode: 200
+response.content: {
+    "message": "Registro alterado com sucesso"
+}
+================================================
+
+================================================
+Data e hora do teste: 04/01/2023 19:16:37
+
+---------BDD-----------------
+Dado que haja um usuario/ADM logado e que haja um produto cadastrado
+E que realize a chamada ao endpoint PUT /produtos
+E que preencha com dados validos o campo @_id
+E que preencha com dados validos o body/JSON Quando executar o endpoint
+Entao o endpoint retorna o code 200 - OK
+E a mensagem: 'Registro alterado com sucesso'
+-----------------------------
+response.StatusCode: OK
+response.StatusCode: 200
+response.content: {
+    "message": "Registro alterado com sucesso"
+}
+================================================
+Inicio
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset='utf-8'>
+ <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<title>Evid?ncia</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+  <h1 style="margin-left: 45%;">Evid?ncia de teste</h1>
+    <hr>
+   <div>
+      <h2 style="color: red;">Data e hora do teste: 04/01/2023 19:20:38</h2>
+<hr>
+<h5>EditaProdutosId</h5>
+            <hr>
+       <p style="color: green;">
+          Dado que haja um usuario/ADM logado e que haja um produto cadastrado
+E que realize a chamada ao endpoint PUT /produtos
+E que preencha com dados validos o campo @_id
+E que preencha com dados validos o body/JSON Quando executar o endpoint
+Entao o endpoint retorna o code 200 - OK
+E a mensagem: 'Registro alterado com sucesso' 
+       </p>
+        <hr>
+   </div>
+    <div>
+       <h2 style="color: red;">response.StatusCode: BadRequest <br>
+response.StatusCode: 400 <br>
+"response.content: {
+    "message": "J? existe produto com esse nome"
+} <br>
+</h2>
+    

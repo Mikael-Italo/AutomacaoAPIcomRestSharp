@@ -70,7 +70,7 @@ namespace AutomacaoAPIcomRestSharp.Features
         {
             string nomeTxt = "CadastroProdutos";
             string bdd =
-                "Dado que o usuario esteja autenticado\n" +
+                "Dado que o usuario/ADM esteja logado e autenticado\n" +
                 "E que realize a chamada ao endpoint POST /produtos\n" +
                 "E que preencha com dados validos o request JSON\n" +
                 "Quando executar o endpoint\n" +
@@ -82,16 +82,48 @@ namespace AutomacaoAPIcomRestSharp.Features
         [TestMethod]
         public void CT13ValidarConsultaProdutosPorId()
         {
-            string nomeTxt = "ConsultaProdutosId";
+            string nome = "ConsultaProdutosId";
             string bdd =
-                "Dado que haja um produto cadastrado\n" +
+                "Dado que haja um usuario/ADM logado e que haja um produto cadastrado\n" +
                 "E que realize a chamada ao endpoint GET /produtos\n" +
                 "E que preencha com dados validos o campo @_id\n" +
                 "Quando executar o endpoint\n" +
                 "Entao o endpoint retorna o code 200 - OK\n" +
                 "E os dados do produto em JSON ";
 
-            produtos.buscarProdutoPorId(sw!, bdd, nomeTxt);
+            produtos.buscarProdutoPorId(sw!, bdd, nome);
+        }
+
+        [TestMethod]
+        public void CT14ValidarExclusaoProdutosPorId()
+        {
+            string nome = "ExcluirProdutosId";
+            string bdd =
+                "Dado que haja um usuario/ADM logado e que haja um produto cadastrado\n" +
+                "E que realize a chamada ao endpoint DELETE /produtos\n" +
+                "E que preencha com dados validos o campo @_id\n" +
+                "Quando executar o endpoint\n" +
+                "Entao o endpoint retorna o code 200 - OK\n" +
+                "E a mensagem: 'Registro excluído com sucesso'";
+
+            produtos.excluirProdutoPorId(sw!, bdd, nome);
+        }
+
+        [TestMethod]
+        public void CT15ValidarEdicaoProdutosPorId()
+        {
+            string br = "<br>";
+            string nome = "EditaProdutosId";
+            string bdd =
+                $"Dado que haja um usuario/ADM logado e que haja um produto cadastrado {br}" +
+                $"E que realize a chamada ao endpoint PUT /produtos {br}" +
+                $"E que preencha com dados validos o campo @_id {br}" +
+                $"E que preencha com dados validos o body/JSON {br}" +
+                $"Quando executar o endpoint {br}" +
+                $"Entao o endpoint retorna o code 200 - OK  {br}" +
+                $"E a mensagem: 'Registro alterado com sucesso' {br}";
+
+            produtos.editarProdutoPorId(sw!, bdd, nome);
         }
         #endregion Produtos
 

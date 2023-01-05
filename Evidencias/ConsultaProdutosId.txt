@@ -1,9 +1,9 @@
 
 ================================================
-Data e hora do teste: 02/01/2023 17:58:32
+Data e hora do teste: 04/01/2023 16:21:41
 
 ---------BDD-----------------
-Dado que haja um produto cadastrado
+Dado que haja um usuario/ADM logado e que haja um produto cadastrado
 E que realize a chamada ao endpoint GET /produtos
 E que preencha com dados validos o campo @_id
 Quando executar o endpoint
@@ -13,10 +13,54 @@ E os dados do produto em JSON
 response.StatusCode: OK
 response.StatusCode: 200
 response.content: {
-    "nome": "PC of the Xuxa 132",
+    "nome": "PC of the Xuxa 43",
     "preco": 100,
     "descricao": "Roda briga de vizinho",
     "quantidade": 12,
-    "_id": "urgmk5Vw2Ztm2dis"
+    "_id": "utGb5P6c58LBq7yk"
+}
+================================================
+
+================================================
+Data e hora do teste: 04/01/2023 16:21:54
+
+---------BDD-----------------
+Dado que haja um usuario/ADM logado e que haja um produto cadastrado
+E que realize a chamada ao endpoint GET /produtos
+E que preencha com dados validos o campo @_id
+Quando executar o endpoint
+Entao o endpoint retorna o code 200 - OK
+E os dados do produto em JSON 
+-----------------------------
+response.StatusCode: OK
+response.StatusCode: 200
+response.content: {
+    "nome": "PC of the Xuxa 61",
+    "preco": 100,
+    "descricao": "Roda briga de vizinho",
+    "quantidade": 12,
+    "_id": "n4FOVUTDCrJL5xsF"
+}
+================================================
+
+================================================
+Data e hora do teste: 04/01/2023 16:23:26
+
+---------BDD-----------------
+Dado que haja um usuario/ADM logado e que haja um produto cadastrado
+E que realize a chamada ao endpoint GET /produtos
+E que preencha com dados validos o campo @_id
+Quando executar o endpoint
+Entao o endpoint retorna o code 200 - OK
+E os dados do produto em JSON 
+-----------------------------
+response.StatusCode: OK
+response.StatusCode: 200
+response.content: {
+    "nome": "PC of the Xuxa 127",
+    "preco": 100,
+    "descricao": "Roda briga de vizinho",
+    "quantidade": 12,
+    "_id": "AWNsqvfVikgoSwvy"
 }
 ================================================

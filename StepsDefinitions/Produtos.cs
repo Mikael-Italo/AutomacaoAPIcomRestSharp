@@ -79,5 +79,48 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
             evidencia.geraEvidencia(sw, response, bdd, nomeTxt);
             Console.WriteLine(response.Content);            
         }
+
+        public void excluirProdutoPorId(StreamWriter sw, string bdd, string nomeTxt)
+        {
+            cadastroParaTeste();
+
+            RestRequest request = new RestRequest($"/produtos/{idProduto}", Method.Delete);
+
+            response = restClient!.Execute(request);
+
+            //Validações
+            Assert.AreEqual(200, (int)response.StatusCode);
+            Assert.IsTrue(response.Content!.Contains("Registro excluído com sucesso"));
+
+            //Evidencia
+            evidencia.geraEvidencia(sw, response, bdd, nomeTxt);
+            Console.WriteLine(response.Content);
+        }
+        public void editarProdutoPorId(StreamWriter sw, string bdd, string nomeTxt)
+        {
+            Random rand = new Random();
+            string rdn = rand.Next(100,200).ToString();
+            cadastroParaTeste();
+
+            RestRequest request = new RestRequest($"/produtos/{idProduto}", Method.Put);
+            request.AddJsonBody(new
+            {
+                nome = $"PC do batman{rdn}",
+                preco =  470,
+                descricao = "Roda briga na baixa",
+                quantidade = 22
+            });
+
+            response = restClient!.Execute(request);
+
+            //Validações
+            Assert.AreEqual(200, (int)response.StatusCode);
+            Assert.IsTrue(response.Content!.Contains("Registro alterado com sucesso"));
+
+            //Evidencia
+            //evidencia.geraEvidencia(sw, response, bdd, nomeTxt);
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nomeTxt);
+            Console.WriteLine(response.Content);
+        }
     }
 }
