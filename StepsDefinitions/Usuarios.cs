@@ -1,4 +1,6 @@
-﻿namespace AutomacaoAPIcomRestSharp.StepsDefinitions
+﻿using System.Collections.Specialized;
+
+namespace AutomacaoAPIcomRestSharp.StepsDefinitions
 {
     public class Usuarios : Hooks
     {
@@ -193,21 +195,26 @@
 
         public void realizarEdicaoUsuarioIdComMesmoEmail()
         {
-            string id = idUser!.ToString();
+            string JsonCadastro1 = cadastroAdm();
+            JsonNode jsn1 = JsonNode.Parse(JsonCadastro1)!;
+            string email = (string)jsn1["email"]!;
 
-            RestRequest request = new RestRequest("/usuarios/" + id, Method.Put);
+            string JsonCadastro = cadastroAdm();
+            JsonNode jsn = JsonNode.Parse(JsonCadastro)!;
+            string id = (string)jsn["idUsuario"]!;
+
+            RestRequest request = new RestRequest($"/usuarios/{id}", Method.Put);
             request.AddJsonBody(new
             {
                 nome = "Teste editado",
-                email = "beltrano@qa.com.br",
-                password = "123teste",
+                email = email,
+                password = "Teste@1",
                 administrador = "true"
             });
 
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
-            Console.WriteLine("id: " + id);
             Console.WriteLine("Code: " + code + " Response " + response.Content);
 
             Assert.AreEqual(400, code);

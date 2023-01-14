@@ -17,7 +17,7 @@
             RestRequest request = new RestRequest("/login", Method.Post);
             request.AddJsonBody(new
             {
-                email,
+                email = email,
                 password = senha
             });
 
