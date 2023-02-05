@@ -1,9 +1,4 @@
-﻿using AutomacaoAPIcomRestSharp.Evidencias;
-using System.Runtime.Intrinsics.Arm;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-
-namespace AutomacaoAPIcomRestSharp.StepsDefinitions
+﻿namespace AutomacaoAPIcomRestSharp.StepsDefinitions
 {
     public class Produtos
     {

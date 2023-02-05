@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace AutomacaoAPIcomRestSharp.Features
+﻿namespace AutomacaoAPIcomRestSharp.Features
 {
     [TestClass]
     public class Features
@@ -8,6 +6,7 @@ namespace AutomacaoAPIcomRestSharp.Features
         Usuarios usuarios = new Usuarios();
         Login login = new Login();
         Produtos produtos = new Produtos();
+        Carrinho carrinho = new Carrinho(); 
         StreamWriter? sw;
 
         #region Usuários
@@ -127,5 +126,23 @@ namespace AutomacaoAPIcomRestSharp.Features
         }
         #endregion Produtos
 
+        #region Carrinho
+        [TestMethod]
+        public void CT16ValidarCadastroCarrinho()
+        {
+            string br = "<br>";
+            string nome = "CadastraCarrinho";
+            string bdd =
+                $"Dado que haja um usuario/ADM logado e que haja um produto cadastrado {br}" +
+                $"E que realize a chamada ao endpoint POST /carrinhos {br}" +
+                $"E que preencha com dados validos o body/JSON {br}" +
+                $"Quando executar o endpoint {br}" +
+                $"Entao o endpoint retorna o code 200 - OK  {br}" +
+                $"E a mensagem: 'Registro alterado com sucesso' {br}";
+
+            carrinho.cadastrarCarrinho(sw!, bdd, nome);
+        }
+
+        #endregion Carrinho
     }
 }

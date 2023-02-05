@@ -3,3 +3,4 @@ global using RestSharp;
 global using System.Text.Json.Nodes;
 global using AutomacaoAPIcomRestSharp.StepsDefinitions;
 global using RestSharp.Authenticators;
+global using AutomacaoAPIcomRestSharp.Evidencias;
