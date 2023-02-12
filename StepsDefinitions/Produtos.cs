@@ -117,5 +117,47 @@
             evidencia.geraEvidenciaHtml(sw, response, bdd, nomeTxt);
             Console.WriteLine(response.Content);
         }
+
+        #region CadastroProdutosParaCarrinhoDinamico
+        public string cadastro2ProdutosCarrinho()
+        {
+            Random rand = new Random();
+            string rdm = rand.Next(1, 200).ToString();
+            string? idProduto1 = null;
+            string? idProduto2 = null;
+
+            //Autentica usando o JW
+            at.autenticaJW(restClient!);
+
+            for (int i = 0; i < 2; i++)
+            {
+                RestRequest request = new RestRequest("/produtos", Method.Post);
+                request.AddJsonBody(new
+                {
+                    nome = $"PC of the Xuxa {rdm}",
+                    preco = 100,
+                    descricao = "Roda briga de vizinho",
+                    quantidade = 12
+                });
+
+                response = restClient!.Execute(request);
+                JsonNode jsn = JsonNode.Parse(response.Content!)!;
+
+                if (i == 0)
+                {
+                    idProduto1 = (string)jsn!["_id"]!;
+                }
+                else
+                {
+                    idProduto2 = (string)jsn!["_id"]!;
+                }
+            }
+            string retorno = "{\r\n  \"idProduto1\": \"" + idProduto1 + "\"," +
+                "\r\n  \"idProduto2\": \""+ idProduto2 +"\"," +
+                "\n}";
+
+            return retorno;
+        }
+        #endregion
     }
 }
