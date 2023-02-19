@@ -6,7 +6,7 @@ namespace AutomacaoAPIcomRestSharp.Evidencias
     {
         public void geraEvidencia(StreamWriter sw, RestResponse response, string bdd, string nomeTxt)
         {
-            sw = new StreamWriter($"C:\\Users\\minascimento\\source\\repos\\TreinamentoAutomacaoAPI\\Evidencias\\{nomeTxt}.txt", true, Encoding.UTF8);
+            sw = new StreamWriter($"C:\\Users\\minascimento\\source\\repos\\TreinamentoAutomacaoAPI\\Evidencias\\txt\\{nomeTxt}.txt", true, Encoding.UTF8);
 
             sw.WriteLine();
             sw.WriteLine("================================================");
@@ -25,7 +25,7 @@ namespace AutomacaoAPIcomRestSharp.Evidencias
 
         public void geraEvidenciaHtml(StreamWriter sw, RestResponse response, string bdd, string nomeHtml)
         {
-            sw = new StreamWriter($"C:\\Users\\minascimento\\source\\repos\\TreinamentoAutomacaoAPI\\Evidencias\\{nomeHtml}.html", true, Encoding.UTF8);
+            sw = new StreamWriter($"C:\\Users\\minascimento\\source\\repos\\TreinamentoAutomacaoAPI\\Evidencias\\html\\{nomeHtml}.html", true, Encoding.UTF8);
 
             sw.WriteLine
                 ("<!DOCTYPE html>" +

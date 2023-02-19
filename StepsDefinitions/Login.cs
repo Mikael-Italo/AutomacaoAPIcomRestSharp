@@ -3,13 +3,14 @@
     public class Login
     {
         Usuarios usuarios = new Usuarios();
+        Evidencia evidencia = new Evidencia();
 
         private static RestClient? restClient;
         public Login() => restClient = new RestClient("https://serverest.dev/#/");
 
         public static RestResponse? response { get; set; }
 
-        public void realizarLoginComSucesso()
+        public void realizarLoginComSucesso(StreamWriter sw, string bdd, string nome)
         {
             JsonNode JsonNode = JsonNode.Parse(usuarios.cadastroAdm())!;
             string email = (string)JsonNode!["email"]!;
@@ -25,14 +26,15 @@
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
-            Console.WriteLine("Code: " + code + " Response " + response.Content);
-
             //Validações
             Assert.AreEqual(200, code);
             Assert.IsTrue(response.Content!.Contains("Login realizado com sucesso"));
+
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
+            evidencia.geraEvidencia(sw, response, bdd, nome);
         }
 
-        public void realizarLoginSemSucesso()
+        public void realizarLoginSemSucesso(StreamWriter sw, string bdd, string nome)
         {
             RestRequest request = new RestRequest("/login", Method.Post);
             request.AddJsonBody(new
@@ -44,11 +46,12 @@
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
-            Console.WriteLine("Code: " + code + " Response " + response.Content);
-
             //Validações
             Assert.AreEqual(401, code);
             Assert.IsTrue(response.Content!.Contains("Email e/ou senha inválidos"));
+
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
+            evidencia.geraEvidencia(sw, response, bdd, nome);
         }
 
     }

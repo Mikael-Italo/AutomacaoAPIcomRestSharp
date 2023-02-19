@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using AutomacaoAPIcomRestSharp.Evidencias;
+using System.Collections.Specialized;
 
 namespace AutomacaoAPIcomRestSharp.StepsDefinitions
 {
@@ -18,8 +19,10 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
         public static string admnistradorL = "false";
         #endregion Dados
 
+        Evidencia evidencia = new Evidencia();
+
         #region Cadastro
-        public void realizarNovoCadastroComSucesso()
+        public void realizarNovoCadastroComSucesso(StreamWriter sw, string bdd, string nome)
         {
             Random random = new Random();
             string rdn = random.Next(1, 100).ToString();
@@ -39,19 +42,17 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
 
             //Converte a 'String' do response para o C# identificar isso como JSON
             JsonNode JsonNode = JsonNode.Parse(response.Content!)!;
-            //var options = new JsonSerializerOptions { WriteIndented = true };
-            //Salva o ID na variavel idUser
             idUser = (string)JsonNode!["_id"]!;
-
-            Console.WriteLine("id: " + idUser);
-            Console.WriteLine("Code: " + code + " Response " + response.Content);
 
             //Validações
             Assert.AreEqual(201, code);
             Assert.IsTrue(response.Content!.Contains("Cadastro realizado com sucesso"), "Verificado que contém mensagem de sucesso");
+
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
+            evidencia.geraEvidencia(sw, response, bdd, nome);
         }
 
-        public void realizarCadastroComDadosJaExistentes()
+        public void realizarCadastroComDadosJaExistentes(StreamWriter sw, string bdd, string nome)
         {
             RestRequest request = new RestRequest("/usuarios", Method.Post);
             request.AddJsonBody(new
@@ -66,12 +67,12 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
-            Console.WriteLine("id: " + idUser);
-            Console.WriteLine("Code: " + code + " Response " + response.Content);
-
             //Validações
             Assert.AreEqual(400, code);
             Assert.IsTrue(response.Content!.Contains("Este email já está sendo usado"), "Verifica se contém mensagem 'Este email já está sendo usado' ");
+
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
+            evidencia.geraEvidencia(sw, response, bdd, nome);
         }
         #region Cadastro Simples
 
@@ -109,7 +110,7 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
 
         #region Consultas
 
-        public void realizarConsultaListaDeUsuariosCadastrados()
+        public void realizarConsultaListaDeUsuariosCadastrados(StreamWriter sw, string bdd, string nome)
         {
             RestRequest request = new RestRequest("/usuarios", Method.Get);
             request.AddParameter("_id", idUser);
@@ -121,16 +122,16 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
-            Console.WriteLine("id: " + idUser);
-            Console.WriteLine("Code: " + code + " Response " + response.Content);
-
             //Validações
             Assert.AreEqual(200, code);
             Assert.IsTrue(response.Content!.Contains(idUser!), "Verifica se o contém o Id no response");
             Assert.IsTrue(response.Content!.Contains(emailL!), "Verifica se o contém o Email no response");
+
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
+            evidencia.geraEvidencia(sw, response, bdd, nome);
         }
 
-        public void realizarConsultaUsuarioId()
+        public void realizarConsultaUsuarioId(StreamWriter sw, string bdd, string nome)
         {
             string id = idUser!.ToString();
 
@@ -139,16 +140,16 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
-            Console.WriteLine("id: " + idUser);
-            Console.WriteLine("Code: " + code + " Response " + response.Content);
-
             //Validações
             Assert.AreEqual(200, code);
             Assert.IsTrue(response.Content!.Contains(id), "Verifica se o contém o Id no response");
             Assert.IsTrue(response.Content!.Contains(emailL!), "Verifica se o contém o email no response");
+
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
+            evidencia.geraEvidencia(sw, response, bdd, nome);
         }
 
-        public void realizarConsultaUsuarioIdInexistente()
+        public void realizarConsultaUsuarioIdInexistente(StreamWriter sw, string bdd, string nome)
         {
             string id = "SD3ysskAoSL";
 
@@ -157,18 +158,18 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
-            Console.WriteLine("id: " + idUser);
-            Console.WriteLine("Code: " + code + " Response " + response.Content);
-
             //Validações
             Assert.AreEqual(400, code);
             Assert.IsTrue(response.Content!.Contains("Usuário não encontrado"));
+
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
+            evidencia.geraEvidencia(sw, response, bdd, nome);
         }
         #endregion Consultas
 
         #region Editar
 
-        public void realizarEdicaoUsuarioId()
+        public void realizarEdicaoUsuarioId(StreamWriter sw, string bdd, string nome)
         {
             string id = idUser!.ToString();
             Random random = new Random();
@@ -186,14 +187,14 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
-            Console.WriteLine("id: " + id);
-            Console.WriteLine("Code: " + code + " Response " + response.Content);
-
             Assert.AreEqual(200, code);
             Assert.IsTrue(response.Content!.Contains("Registro alterado com sucesso"));
+
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
+            evidencia.geraEvidencia(sw, response, bdd, nome);
         }
 
-        public void realizarEdicaoUsuarioIdComMesmoEmail()
+        public void realizarEdicaoUsuarioIdComMesmoEmail(StreamWriter sw, string bdd, string nome)
         {
             string JsonCadastro1 = cadastroAdm();
             JsonNode jsn1 = JsonNode.Parse(JsonCadastro1)!;
@@ -215,17 +216,18 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
-            Console.WriteLine("Code: " + code + " Response " + response.Content);
-
             Assert.AreEqual(400, code);
             Assert.IsTrue(response.Content!.Contains("Este email já está sendo usado"));
+
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
+            evidencia.geraEvidencia(sw, response, bdd, nome);
         }
 
         #endregion Editar
 
         #region Exclusão
 
-        public void realizarExclusaoPorId()
+        public void realizarExclusaoPorId(StreamWriter sw, string bdd, string nome)
         {
             string id = idUser!.ToString();
 
@@ -233,16 +235,16 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
 
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
-
-            Console.WriteLine("id: " + id);
-            Console.WriteLine("Code: " + code + " Response " + response.Content);
 
             Assert.AreEqual(200, code);
             Assert.IsTrue(response.Content!.Contains("Registro excluído com sucesso"));
 
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
+            evidencia.geraEvidencia(sw, response, bdd, nome);
+
         }
 
-        public void tentarRealizarExclusaoComIdInexistente()
+        public void tentarRealizarExclusaoComIdInexistente(StreamWriter sw, string bdd, string nome)
         {
             string id = idUser!.ToString();
 
@@ -251,11 +253,11 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
-            Console.WriteLine("id: " + id);
-            Console.WriteLine("Code: " + code + " Response " + response.Content);
-
             Assert.AreEqual(200, code);
             Assert.IsTrue(response.Content!.Contains("Nenhum registro excluído"));
+
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
+            evidencia.geraEvidencia(sw, response, bdd, nome);
         }
         #endregion Exclusão
     }

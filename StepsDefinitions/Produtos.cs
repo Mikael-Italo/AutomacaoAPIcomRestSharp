@@ -9,7 +9,7 @@
         Evidencia evidencia = new Evidencia();
         public static string idProduto = string.Empty;
 
-        public void cadastroDeProdutosComSucesso(StreamWriter sw, string bdd, string nomeTxt)
+        public void cadastroDeProdutosComSucesso(StreamWriter sw, string bdd, string nome)
         {
             Random rand = new Random();
             string rdm = rand.Next(1,200).ToString();
@@ -33,7 +33,8 @@
             Assert.AreEqual(201, (int)response.StatusCode);
             Assert.IsTrue(response.Content!.Contains("Cadastro realizado com sucesso"));
             //Evidencia
-            evidencia.geraEvidencia(sw, response, bdd, nomeTxt);
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
+            evidencia.geraEvidencia(sw, response, bdd, nome);
         }
 
         public void cadastroParaTeste()
@@ -71,7 +72,7 @@
             Assert.IsTrue(response.Content!.Contains((string)idProduto));
 
             //Evidencia
-            evidencia.geraEvidencia(sw, response, bdd, nomeTxt);
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nomeTxt);
             Console.WriteLine(response.Content);            
         }
 
@@ -88,7 +89,7 @@
             Assert.IsTrue(response.Content!.Contains("Registro excluído com sucesso"));
 
             //Evidencia
-            evidencia.geraEvidencia(sw, response, bdd, nomeTxt);
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nomeTxt);
             Console.WriteLine(response.Content);
         }
         public void editarProdutoPorId(StreamWriter sw, string bdd, string nomeTxt)
@@ -134,7 +135,7 @@
                 RestRequest request = new RestRequest("/produtos", Method.Post);
                 request.AddJsonBody(new
                 {
-                    nome = $"PC of the Xuxa {rdm}",
+                    nome = $"PC of the Xuxa {rdm+i}",
                     preco = 100,
                     descricao = "Roda briga de vizinho",
                     quantidade = 12
@@ -153,7 +154,7 @@
                 }
             }
             string retorno = "{\r\n  \"idProduto1\": \"" + idProduto1 + "\"," +
-                "\r\n  \"idProduto2\": \""+ idProduto2 +"\"," +
+                "\r\n  \"idProduto2\": \""+ idProduto2 +"\"" +
                 "\n}";
 
             return retorno;

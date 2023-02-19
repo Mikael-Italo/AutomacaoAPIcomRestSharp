@@ -1,4 +1,7 @@
-﻿namespace AutomacaoAPIcomRestSharp.StepsDefinitions
+﻿using RestSharp;
+using System.Runtime.Intrinsics.Arm;
+
+namespace AutomacaoAPIcomRestSharp.StepsDefinitions
 {
     public class Carrinho
     {
@@ -10,25 +13,35 @@
         Produtos produtos = new Produtos();
 
 
-        public void cadastrarCarrinho(StreamWriter sw, string bdd, string nomeTxt)
+        public void cadastrarCarrinho(StreamWriter sw, string bdd, string nome)
         {
             JsonNode jsn = JsonNode.Parse(produtos.cadastro2ProdutosCarrinho())!;
             string idProduto1 = (string)jsn!["idProduto1"]!;
             string idProduto2 = (string)jsn!["idProduto2"]!;
 
-            Console.WriteLine(produtos.cadastro2ProdutosCarrinho());
-            Console.WriteLine("id1: "+idProduto1);
-            Console.WriteLine("id2: "+idProduto2);
+            string jsonPost = "{\r\n  \"produtos\": [\r\n    {\r\n      " +
+                "\"idProduto\": \""+idProduto1+"\",\r\n      " +
+                "\"quantidade\": 1\r\n    },\r\n    {\r\n      " +
+                "\"idProduto\": \""+idProduto2+"\",\r\n      " +
+                "\"quantidade\": 3\r\n    " +
+                "}\r\n  ]\r\n}";
 
-            //response = restClient!.Execute(request);
-            //var code = (int)response.StatusCode;
+            at.autenticaHeader(restClient!);
 
-            //Console.WriteLine("Code: " + code + " Response " + response.Content);
+            RestRequest request = new RestRequest("/carrinhos", Method.Post);
+            request.AddJsonBody(jsonPost);
+       
+
+            response = restClient!.Execute(request);
+            var code = (int)response.StatusCode;
+
+            Console.WriteLine("Code: " + code + " Response " + response.Content);
 
             //Validações
-            //Assert.AreEqual(401, code);
-            //Assert.IsTrue(response.Content!.Contains("Email e/ou senha inválidos"));
+            Assert.AreEqual(201, code);
+            Assert.IsTrue(response.Content!.Contains("Cadastro realizado com sucesso"));
 
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
         }
 
     }
