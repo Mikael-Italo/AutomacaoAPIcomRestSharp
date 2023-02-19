@@ -19,4 +19,9 @@
     <PackageReference Include="RestSharp" Version="108.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Evidencias\html\" />
+    <Folder Include="Evidencias\txt\" />
+  </ItemGroup>
+
 </Project>
