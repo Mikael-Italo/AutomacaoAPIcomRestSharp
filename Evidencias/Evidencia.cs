@@ -40,7 +40,7 @@ namespace AutomacaoAPIcomRestSharp.Evidencias
                 "<h1 style=\"margin-left: 45%;\">Evidência de teste</h1>\n    <hr>\n   " +
                 "<div>\n      " +
                 $"<h2 style=\"color: red;\">Data e hora do teste: {DateTime.Now.ToString()}</h2>\n<hr>\n" +
-                $"<h4>{nomeHtml}</h4>\n            <hr>\n       " +
+                $"<h4 style=\"margin-left: 45%;\">{nomeHtml}</h4>\n            <hr>\n       " +
                 "<p style=\"color: green;\">\n         " +
                 $" {bdd} \n       " +
                 "</p>\n        <hr>\n   " +
