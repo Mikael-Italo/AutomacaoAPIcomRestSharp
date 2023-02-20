@@ -87,10 +87,39 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
             RestRequest request = new RestRequest("/usuarios", Method.Post);
             request.AddJsonBody(new
             {
-                nome = "Testando",
+                nome = "Testando usuario Adm",
                 email,
                 password = "teste",
                 administrador = "true"
+            });
+
+            response = restClient!.Execute(request);
+            JsonNode JsonNode = JsonNode.Parse(response.Content!)!;
+            idS = (string)JsonNode!["_id"]!;
+
+            retorno = "{\r\n  \"email\": \"" + email + "\"," +
+                "\r\n  \"senha\": \"teste\"," +
+                "\r\n  \"idUsuario\": \"" + idS + "\"" + "" +
+                "\n}";
+
+            return retorno;
+        }
+
+        public string cadastroSemAdm()
+        {
+            Random random = new Random();
+            string rdn = random.Next(1, 100).ToString();
+
+            string email = "teste.qa" + rdn + "@qa.com";
+            string idS, retorno;
+
+            RestRequest request = new RestRequest("/usuarios", Method.Post);
+            request.AddJsonBody(new
+            {
+                nome = "Testando usuario comum",
+                email,
+                password = "teste",
+                administrador = "false"
             });
 
             response = restClient!.Execute(request);
@@ -221,6 +250,31 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
 
             evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
             evidencia.geraEvidencia(sw, response, bdd, nome);
+        }
+
+        public void realizarEdicaoComNovoEmailEntaoRealizaCadastro(StreamWriter sw, string bdd, string nome)
+        {
+            Random random = new Random();
+            string rdn = random.Next(1, 500).ToString();
+
+            RestRequest request = new RestRequest($"/usuarios/{"IdInexistente"}", Method.Put);
+            request.AddJsonBody(new
+            {
+                nome = "Teste editado",
+                email = "cadastroPorPUT"+rdn+"@qa.com.br",
+                password = "Teste@1",
+                administrador = "true"
+            });
+
+            response = restClient!.Execute(request);
+            var code = (int)response.StatusCode;
+
+            Assert.AreEqual(201, code);
+            Assert.IsTrue(response.Content!.Contains("Cadastro realizado com sucesso"));
+
+            evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
+            evidencia.geraEvidencia(sw, response, bdd, nome);
+
         }
 
         #endregion Editar

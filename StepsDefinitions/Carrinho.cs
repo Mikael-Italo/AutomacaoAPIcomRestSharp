@@ -35,14 +35,28 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
             response = restClient!.Execute(request);
             var code = (int)response.StatusCode;
 
-            Console.WriteLine("Code: " + code + " Response " + response.Content);
-
             //Validações
             Assert.AreEqual(201, code);
             Assert.IsTrue(response.Content!.Contains("Cadastro realizado com sucesso"));
 
             evidencia.geraEvidenciaHtml(sw, response, bdd, nome);
         }
+
+        public void cadastraCarrinho1ProdutoSemRetorno(RestClient restClient, string idProduto)
+        {
+            string jsonPost = "{\r\n  \"produtos\": [\r\n    {\r\n     " +
+                " \"idProduto\": \""+idProduto+"\",\r\n     " +
+                " \"quantidade\": 1\r\n    }\r\n  ]\r\n}";
+
+            at.autenticaHeader(restClient!);
+
+            RestRequest request = new RestRequest("/carrinhos", Method.Post);
+            request.AddJsonBody(jsonPost);
+
+
+            response = restClient!.Execute(request);
+        }
+
 
     }
 }

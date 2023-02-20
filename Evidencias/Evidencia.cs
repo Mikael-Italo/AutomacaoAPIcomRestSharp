@@ -37,7 +37,7 @@ namespace AutomacaoAPIcomRestSharp.Evidencias
                 "<meta name='viewport' content='width=device-width, initial-scale=1'>\n" +
                 "</head>\n" +
                 "<body>\n  " +
-                "<h1 style=\"margin-left: 45%;\">Evidência de teste</h1>\n    <hr>\n   " +
+                "<h1 style=\"margin-left: 30%;\">__________Evidência de teste___________</h1>\n    <hr>\n   " +
                 "<div>\n      " +
                 $"<h2 style=\"color: red;\">Data e hora do teste: {DateTime.Now.ToString()}</h2>\n<hr>\n" +
                 $"<h4 style=\"margin-left: 45%;\">{nomeHtml}</h4>\n            <hr>\n       " +
@@ -45,10 +45,10 @@ namespace AutomacaoAPIcomRestSharp.Evidencias
                 $" {bdd} \n       " +
                 "</p>\n        <hr>\n   " +
                 "</div>\n    <div>\n       " +
-                $"<h2 style=\"color: red;\">response.StatusCode: {response.StatusCode} <br>\n" +
+                $"<h2 style=\"color: green;\">response.StatusCode: {response.StatusCode} <br>\n" +
                 $"response.StatusCode: {(int)response.StatusCode} <br>\n" +
                 $"response.content: {response.Content} <br>\n" +
-                "</h2>\n        <hr>\n   " +
+                "</h2>\n        <hr>\n <hr>\n   " +
                 "</div>\n" +
                 "</body>\n" +
                 "</html>");
