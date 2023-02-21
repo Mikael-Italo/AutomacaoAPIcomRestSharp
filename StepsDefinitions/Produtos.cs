@@ -276,7 +276,7 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
         {
             cadastroParaTeste();
             #region Add produto a um carrinho
-            carrinho.cadastraCarrinho1ProdutoSemRetorno(restClient!, idProduto);
+            carrinho.cadastraCarrinho1ProdutoSemRetorno(restClient!, idProduto!);
             #endregion
 
             RestRequest request = new RestRequest($"/produtos/{idProduto}", Method.Delete);
