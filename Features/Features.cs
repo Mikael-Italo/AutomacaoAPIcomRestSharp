@@ -3,10 +3,10 @@
     [TestClass]
     public class Features
     {
-        Usuarios usuarios = new();
-        Login login = new();
-        Produtos produtos = new();
-        Carrinho carrinho = new();
+        Usuarios usuarios = new Usuarios();
+        Login login = new Login();
+        Produtos produtos = new Produtos();
+        Carrinho carrinho = new Carrinho(); 
         StreamWriter? sw;
 
         #region Usuários
@@ -79,7 +79,7 @@
         }
 
         [TestMethod]
-        public void CT05ValidarConsultaIdInexistente()
+        public void CT05ValidarConsultaIdInexistente() 
         {
             string br = "<br>";
             string nome = "ConsultaUsuarioInexistente";
@@ -92,7 +92,7 @@
                 $"E a mensagem: 'Usuário não encontrado' {br}";
 
             usuarios.realizarConsultaUsuarioIdInexistente(sw!, bdd, nome);
-        }
+        } 
 
         #endregion CONSULTA
 
@@ -113,7 +113,7 @@
                 $"E a mensagem: 'Registro alterado com sucesso' {br}";
 
             usuarios.realizarEdicaoUsuarioId(sw!, bdd, nome);
-        }
+        } 
 
         [TestMethod]
         public void CT07ValidarEdicaoPorIdComMesmoEmail()
@@ -130,7 +130,7 @@
                 $"Entao o endpoint retorna o code 400  {br}" +
                 $"E a mensagem: 'Este email já está sendo usado' {br}";
 
-            usuarios.realizarEdicaoUsuarioIdComMesmoEmail(sw!, bdd, nome);
+            usuarios.realizarEdicaoUsuarioIdComMesmoEmail(sw!,bdd, nome);
         }
 
         [TestMethod]
@@ -167,7 +167,7 @@
                 $"E a mensagem: 'Registro excluido com sucesso' {br}";
 
             usuarios.realizarExclusaoPorId(sw!, bdd, nome);
-        }
+        } 
 
         [TestMethod]
         public void CT09ValidarTentativaExclusaoComIdInexistente()
@@ -183,7 +183,7 @@
                 $"E a mensagem: 'Nenhum registro excluído' {br}";
 
             usuarios.tentarRealizarExclusaoComIdInexistente(sw!, bdd, nome);
-        }
+        } 
 
         #endregion Exclusão
 
@@ -205,7 +205,7 @@
                 $"E a mensagem: 'Login realizado com sucesso' {br}";
 
             login.realizarLoginComSucesso(sw!, bdd, nome);
-        }
+        } 
 
         [TestMethod]
         public void CT11ValidarloginUsuarioInvalido()
@@ -413,7 +413,7 @@
         }
 
         [TestMethod]
-        public void CT14_4ValidarExclusaosProdutosAdicionadoCarrinho()
+        public void CT14_4ValidarExclusaoProdutosAdicionadoCarrinho()
         {
             string br = "<br>";
             string nome = "ExcluirProdutosAdicionadosNoCarrinho";

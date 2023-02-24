@@ -10,7 +10,7 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
         Autenticacao at = new Autenticacao();
         Evidencia evidencia = new Evidencia();
         Carrinho carrinho = new Carrinho();
-        public static string? idProduto, nome, descricao;
+        public static string idProduto, nome, descricao = string.Empty;
         public static int preco, quantidade;
 
         public void cadastroDeProdutosComSucesso(StreamWriter sw, string bdd, string nome)
@@ -169,7 +169,7 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
 
             //Validações
             Assert.AreEqual(200, (int)response.StatusCode);
-            Assert.IsTrue(response.Content!.Contains(idProduto!));
+            Assert.IsTrue(response.Content!.Contains((string)idProduto));
 
             //Evidencia
             evidencia.geraEvidenciaHtml(sw, response, bdd, nomeTxt);           
@@ -190,7 +190,7 @@ namespace AutomacaoAPIcomRestSharp.StepsDefinitions
 
             //Validações
             Assert.AreEqual(200, (int)response.StatusCode);
-            Assert.IsTrue(response.Content!.Contains(idProduto!));
+            Assert.IsTrue(response.Content!.Contains((string)idProduto));
             Assert.IsTrue(response.Content!.Contains("\"produtos\":"));
 
             //Evidencia
